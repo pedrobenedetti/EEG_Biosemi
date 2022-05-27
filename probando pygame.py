@@ -13,7 +13,7 @@ dialogue = dialogue_font.render("Bienvenido al experimento.", True, (0,0,0))
 dialogue_rect = dialogue.get_rect(center = (X//2,Y//2-linea))
 dialogue1 = dialogue_font.render("", True, (0,0,0))
 dialogue_rect1 = dialogue1.get_rect(center = (X//2,Y//2))
-dialogue2 = dialogue_font.render("Presione -> para continuar.", True, (0,0,0))
+dialogue2 = dialogue_font.render("Presione -> para continuar. Q para salir.", True, (0,0,0))
 dialogue_rect2 = dialogue2.get_rect(center = (X//2,Y//2+linea))
 
 pagina=0
@@ -141,7 +141,7 @@ while True:
         dialogue1 = dialogue_font.render("", True, (0,0,0))
         dialogue_rect1 = dialogue1.get_rect(center = (X//2,Y//2))  
 
-        dialogue2 = dialogue_font.render("Presione -> para continuar.", True, (0,0,0))
+        dialogue2 = dialogue_font.render("Presione -> para continuar.  Q para salir.", True, (0,0,0))
         dialogue_rect2 = dialogue2.get_rect(center = (X//2,Y//2+linea)) 
     
 
