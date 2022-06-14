@@ -14,7 +14,7 @@ This files work with EEG data from 128 channels. EXG1 and EXG2 are the reference
 Description missing
 
 ## oddball_V2
-Description missing
+Protocol in which a green ball blinks blue. P300 wave is intended to be detected.
 
 ## parallel_com
-Description missing
+Contains the function 'send_mark_biosemi', that sends triggers to the ActiveTwo AD-box of the biosemi device.
