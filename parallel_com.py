@@ -4,7 +4,7 @@ import datetime
 import parallel
 
 def send_mark_biosemi(port, mark):
-    logging.basicConfig(filename="log.txt", level=logging.ERROR)
+    logging.basicConfig(filename="logger_parallel.txt", level=logging.ERROR)
     try:
         pport = parallel.ParallelPort(address=port)
         #Connection with the serial port
