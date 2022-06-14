@@ -4,12 +4,13 @@ Author: Pedro Benedetti - Bioengineer Department, Buenos Aires' Technological In
 
 pbenedetti@itba.edu.ar - @peedrobenedetti
 
+Python files for working with Biosemi EEG device.
 
 ## mne_upload_biosemi
 
 File for processing Biosemi's EEG files.
 
-This files work with EEG data from 128 channels. EXG1 and EXG2 are the references, placed in left and right mastoid, respectively.
+This file work with EEG data from 128 channels. EXG1 and EXG2 are the references, placed in left and right mastoid, respectively.
 
 <img src="https://user-images.githubusercontent.com/105320115/168087179-a85ce94e-ef8f-4d22-9a0b-5a9c3eee6789.png" width="600">
 
