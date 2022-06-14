@@ -1,5 +1,6 @@
 # EEG_Biosemi
 Files por processing Biosemi's EEG files.
+
 Author: Pedro Benedetti - Bioengineer Department, Buenos Aires' Technological Institute
 
 This files work with EEG data from 128 channels. EXG1 and EXG2 are the references, placed in left and right mastoid, respectively.
