@@ -1,7 +1,8 @@
 # EEG_Biosemi
-Archivos para procesamiento de mediciones de EEG de Biosemi
+Files por processing Biosemi's EEG files.
 
-128 canales, EXG1 y EXG2 son las referencias que corresponden al mastoideo izquierdo y derecho, respectivamente
+This files work with EEG data from 128 channels. EXG1 and EXG2 are the references, placed in left and right mastoid, respectively.
+
 
 
 ![image](https://user-images.githubusercontent.com/105320115/168087179-a85ce94e-ef8f-4d22-9a0b-5a9c3eee6789.png)
