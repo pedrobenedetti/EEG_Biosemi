@@ -1,13 +1,36 @@
+#Updated 14/6/2022
 import pygame
 import sys
 import time 
+import logging
 
-port='COM5'
+logging.basicConfig(filename="logger_probando.txt", level=logging.DEBUG)
+time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+mess0="\n Welcome to probando pygame V2 protocol"
+logging.debug(mess0)
+mess=(time_txt + ": Initializing protocol...")
+logging.debug(mess)
 
-from parallel_com import *
+port='0xC020'
+
+try:
+    from parallel_com import *
+except:
+    print("Can't import 'parallel_com'")
+    time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    mess=(time_txt + ": Can't import 'parallel_com'")
+    logging.error(mess)
+    
 #100 cerralos, 200 abrilos, 50 arrancamos, 20 avanzo, 10 cerro
 pygame.init()
-send_mark_biosemi(port,50)
+try:
+    send_mark_biosemi(port,50)
+except:
+    print("Can't execute 'send_mark_biosemi' properly")
+    time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    mess=(time_txt + ": Can't execute 'send_mark_biosemi' properly")
+    logging.error(mess)
+    
 screen = pygame.display.set_mode((0, 0),pygame.FULLSCREEN)
 clock = pygame.time.Clock()
 X,Y=screen. get_size()
@@ -33,14 +56,32 @@ while True:
                     page=page-1
             if event.key == pygame.K_RIGHT:
                 page=page+1
-                send_mark_biosemi(port,20)
+                try:
+                    send_mark_biosemi(port,20)
+                except:
+                    print("Can't execute 'send_mark_biosemi' properly")
+                    time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                    mess=(time_txt + ": Can't execute 'send_mark_biosemi' properly")
+                    logging.error(mess)
             if event.key==pygame.K_q:
-                send_mark_biosemi(port,10)
+                try:
+                    send_mark_biosemi(port,10)
+                except:
+                    print("Can't execute 'send_mark_biosemi' properly")
+                    time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                    mess=(time_txt + ": Can't execute 'send_mark_biosemi' properly")
+                    logging.error(mess)
                 pygame.quit()
                 sys.exit()
 
         if event.type == pygame.QUIT:
-            send_mark_biosemi(port,10)
+            try:
+                send_mark_biosemi(port,10)
+            except:
+                print("Can't execute 'send_mark_biosemi' properly")
+                time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                mess=(time_txt + ": Can't execute 'send_mark_biosemi' properly")
+                logging.error(mess)
             pygame.quit()
             sys.exit()
     
@@ -69,7 +110,13 @@ while True:
             time.sleep(5)#abiertos
             soundObj.play()
             time.sleep(1) # wait and let the sound play for 1 second
-            send_mark_biosemi(port,100)
+            try:
+                send_mark_biosemi(port,100)
+            except:
+                print("Can't execute 'send_mark_biosemi' properly")
+                time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                mess=(time_txt + ": Can't execute 'send_mark_biosemi' properly")
+                logging.error(mess)
         print("Opened", cont_a, "times")
         print(page)
         soundObj.stop()
@@ -107,7 +154,13 @@ while True:
         soundObj.play()
         time.sleep(1) # wait and let the sound play for 1 second
         soundObj.stop()
-        send_mark_biosemi(port,200)
+        try:
+            send_mark_biosemi(port,200)
+        except:
+            print("Can't execute 'send_mark_biosemi' properly")
+            time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+            mess=(time_txt + ": Can't execute 'send_mark_biosemi' properly")
+            logging.error(mess)
         page=page+1
 
         dialogue = dialogue_font.render("Abrí los ojos y mantenelos abiertos.",True, (0,0,0)) 
@@ -123,7 +176,13 @@ while True:
         soundObj.play()
         time.sleep(1) # wait and let the sound play for 1 second
         soundObj.stop()
-        send_mark_biosemi(port,100)
+        try:
+            send_mark_biosemi(port,100)
+        except:
+            print("Can't execute 'send_mark_biosemi' properly")
+            time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+            mess=(time_txt + ": Can't execute 'send_mark_biosemi' properly")
+            logging.error(mess)
         dialogue = dialogue_font.render("",True, (0,0,0)) 
         dialogue_rect = dialogue.get_rect(center = (X//2,Y//2-linea))
 
