@@ -1,5 +1,5 @@
 # EEG_Biosemi
-Files por processing Biosemi's EEG files.
+Files for processing Biosemi's EEG files.
 
 Author: Pedro Benedetti - Bioengineer Department, Buenos Aires' Technological Institute
 
