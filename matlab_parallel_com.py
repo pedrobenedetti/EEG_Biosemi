@@ -14,11 +14,11 @@ eng1 = matlab.engine.start_matlab()
 eng1.cd(r'C:\Users\pedro\Documents\Doctorado\Biosemi', nargout=0)
 
 #Defines the function that sends the mark
-def send_mark_biosemi(mark):
+def send_mark_biosemi(mark, port):
     logging.basicConfig(filename="logger_parallel.txt", level=logging.ERROR)
     try:
         #Calls the MATLAB fuction 'send_mark'. 'mark' is the input and 'nargout=0' means that there is no output argument
-        eng1.send_mark(mark, nargout=0)  
+        eng1.send_mark(mark, port, nargout=0)  
         #eng1.simple_script(nargout=0)          
         
     #throws an exception in case that an error occurs.
