@@ -11,10 +11,10 @@ logging.debug(mess0)
 mess=(time_txt + ": Initializing protocol...")
 logging.debug(mess)
 
-port='0xC020'
+port='C020'
 
 try:
-    from parallel_com import *
+    from matlab_parallel_com import *
 except:
     print("Can't import 'parallel_com'")
     time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -24,7 +24,7 @@ except:
 #100 cerralos, 200 abrilos, 50 arrancamos, 20 avanzo, 10 cerro
 pygame.init()
 try:
-    send_mark_biosemi(port,50)
+    send_mark_biosemi(50,port)
 except:
     print("Can't execute 'send_mark_biosemi' properly")
     time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -57,7 +57,7 @@ while True:
             if event.key == pygame.K_RIGHT:
                 page=page+1
                 try:
-                    send_mark_biosemi(port,20)
+                    send_mark_biosemi(20,port)
                 except:
                     print("Can't execute 'send_mark_biosemi' properly")
                     time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -65,7 +65,7 @@ while True:
                     logging.error(mess)
             if event.key==pygame.K_q:
                 try:
-                    send_mark_biosemi(port,10)
+                    send_mark_biosemi(10,port)
                 except:
                     print("Can't execute 'send_mark_biosemi' properly")
                     time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -76,7 +76,7 @@ while True:
 
         if event.type == pygame.QUIT:
             try:
-                send_mark_biosemi(port,10)
+                send_mark_biosemi(10,port)
             except:
                 print("Can't execute 'send_mark_biosemi' properly")
                 time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -111,7 +111,7 @@ while True:
             soundObj.play()
             time.sleep(1) # wait and let the sound play for 1 second
             try:
-                send_mark_biosemi(port,100)
+                send_mark_biosemi(100,port)
             except:
                 print("Can't execute 'send_mark_biosemi' properly")
                 time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -155,7 +155,7 @@ while True:
         time.sleep(1) # wait and let the sound play for 1 second
         soundObj.stop()
         try:
-            send_mark_biosemi(port,200)
+            send_mark_biosemi(200,port)
         except:
             print("Can't execute 'send_mark_biosemi' properly")
             time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -177,7 +177,7 @@ while True:
         time.sleep(1) # wait and let the sound play for 1 second
         soundObj.stop()
         try:
-            send_mark_biosemi(port,100)
+            send_mark_biosemi(100,port)
         except:
             print("Can't execute 'send_mark_biosemi' properly")
             time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
