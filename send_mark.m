@@ -14,6 +14,6 @@ end
 io64(pportobj,pportaddr, mark);
 WaitSecs(MARK_DURATION);
 io64(pportobj,pportaddr,0);
-display(marca)
-y=1
+% display(mark, port)
+y=1;
 end
