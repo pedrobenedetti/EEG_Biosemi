@@ -17,8 +17,8 @@ eng1.cd(r'C:\Users\pedro\Documents\Doctorado\Biosemi', nargout=0)
 def send_mark_biosemi(mark, port):
     logging.basicConfig(filename="logger_parallel.txt", level=logging.ERROR)
     try:
-        #Calls the MATLAB fuction 'send_mark'. 'mark' is the input and 'nargout=0' means that there is no output argument
-        eng1.send_mark(mark, port, nargout=0)  
+        #Calls the MATLAB fuction 'send_mark_matlab'. 'mark' and 'port' are the inputs and 'nargout=0' means that there is no output argument
+        eng1.send_mark_matlab(mark, port, nargout=0)  
         #eng1.simple_script(nargout=0)          
         
     #throws an exception in case that an error occurs.
