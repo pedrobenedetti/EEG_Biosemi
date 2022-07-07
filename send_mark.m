@@ -1,6 +1,6 @@
-function y = send_mark(marca)
-MARCA_DURACION=1e-3;
-pportaddr = 'C020';
+function y = send_mark_matlab(mark, port)
+MARK_DURATION=1e-3;
+pportaddr = port;
 if exist('pportaddr','var') && ~isempty(pportaddr)
     fprintf('Connecting to parallel port 0x%s.\n', pportaddr);
     pportaddr = hex2dec(pportaddr);
@@ -11,11 +11,9 @@ if exist('pportaddr','var') && ~isempty(pportaddr)
     end
 end
 
-io64(pportobj,pportaddr, marca);
-WaitSecs(MARCA_DURACION);
+io64(pportobj,pportaddr, mark);
+WaitSecs(MARK_DURATION);
 io64(pportobj,pportaddr,0);
 display(marca)
 y=1
 end
-
-
