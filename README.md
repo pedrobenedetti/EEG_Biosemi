@@ -23,8 +23,14 @@ This file work with EEG data from 128 channels. EXG1 and EXG2 are the references
 ## testing_pygame_V2
 Description missing
 
-## oddball_V2
-Protocol in which a green ball blinks blue. P300 wave is intended to be detected.
+## oddball_V3
+Protocol in which a green ball blinks blue. P300 wave is intended to be detected. Duration of stimuli and their repetition are adjustable. Sends triggers to EEG device via 'matalb_parallel_com' script.
 
-## parallel_com
-Contains the function 'send_mark_biosemi', that sends triggers to the ActiveTwo AD-box of the biosemi device.
+<img src="https://user-images.githubusercontent.com/105320115/177829291-967dfb34-24f9-41fb-aa0b-b5f989785160.png" width="600">
+
+
+## matlab_parallel_com
+Contains the function 'send_mark_biosemi'. When imported from another script activates a MATLAB engine. Also contains the fuction 'close_eng', which closes the MATLAB engine.
+
+## send_mark.m
+Contains MATLAB fuction that sends marks to the ActiveTwo AD-box of the biosemi device.
