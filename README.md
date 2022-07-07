@@ -40,3 +40,18 @@ Fuction to close the engine once the protocol has ended
 
 ## send_mark.m
 Contains MATLAB fuction that sends marks to the ActiveTwo AD-box of the biosemi device.
+
+## matlab_calling_test.py
+Script designed to test the communication between MATLAB and Python.
+
+# Communication between MATLAB and Python
+- MATLAB R2014b or later required
+- Python 3.7 or older required
+  - The Pyhton enviroment must have Python 3.7 and it's path must be the first Python path in the PATH list in Enviroment Variables.
+- In MATLAB command window you must run:
+
+```
+cd (fullfile(matlabroot,'extern','engines','python'))
+system('python setup.py install')
+```
+
