@@ -28,12 +28,14 @@ except:
 #Codes for marks: 100 ball turned into green, 170 blue, 255 start of protocol, 200 end of protocol.
 #Green: (0,255,0)
 #Blue: (0,0,255)
-#port='0xC020' #This is not used in this version. Port is defined in MATLAB code.
+
+port='C020'
+#Defines parallel port
 
 pygame.init()
 # Initiate pygame
 try:
-    send_mark_biosemi(255)
+    send_mark_biosemi(255, port)
     #A mark is sent to the EEG indicating that the protocol has started.
 except:
     print("Can't execute 'send_mark_biosemi' properly")
@@ -88,7 +90,7 @@ while True:
         counter=counter+1
         #We count one cycle
         try:
-            send_mark_biosemi(170)
+            send_mark_biosemi(170, port)
             #170=turned into blue
         except:
             print("Can't execute 'send_mark_biosemi' properly")
@@ -107,7 +109,7 @@ while True:
             print("Turned green at ", time_passed, "seconds") 
             #Print message
             try:
-                send_mark_biosemi(100)
+                send_mark_biosemi(100, port)
                 #100=turned into green
             except:
                 print("Can't execute 'send_mark_biosemi' properly")
@@ -135,7 +137,7 @@ while True:
                 #the user can quit the protocol by pressing Q key
                 try:
                 #one last mark is sent indicating that the protocol is over
-                    send_mark_biosemi(200)
+                    send_mark_biosemi(200, port)
                     mess=(time_txt + ": Ending protocol..."+"\n")
                     logging.debug(mess)
                 except:
@@ -149,7 +151,7 @@ while True:
     if event.type == pygame.QUIT:
         try:
             #one last mark is sent indicating that the protocol is over
-            send_mark_biosemi(200)
+            send_mark_biosemi(200, port)
             mess=(time_txt + ": Ending protocol..."+"\n")
         except:
             print("Can't execute 'send_mark_biosemi' properly")
