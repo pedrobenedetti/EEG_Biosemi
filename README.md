@@ -33,5 +33,10 @@ Protocol in which a green ball blinks blue. P300 wave is intended to be detected
 ## matlab_parallel_com.py
 Contains the function 'send_mark_biosemi'. When imported from another script activates a MATLAB engine. Also contains the fuction 'close_eng', which closes the MATLAB engine.
 
+### send_mark_biosemi(mark, port)
+Calls the MATLAB fuction 'send_mark_matlab'. 'mark' and 'port' are the inputs and 'nargout=0' means that there is no output argument
+### close_eng()
+Fuction to close the engine once the protocol has ended
+
 ## send_mark.m
 Contains MATLAB fuction that sends marks to the ActiveTwo AD-box of the biosemi device.
