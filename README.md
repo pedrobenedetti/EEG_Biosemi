@@ -54,4 +54,4 @@ Script designed to test the communication between MATLAB and Python.
 cd (fullfile(matlabroot,'extern','engines','python'))
 system('python setup.py install')
 ```
-
+In 'matlab_parallel_com.py' there is an example of how MATLAB engine must be called from Python.
