@@ -26,7 +26,9 @@ Description missing
 ## oddball_V3
 Protocol in which a green ball blinks blue. P300 wave is intended to be detected. Duration of stimuli and their repetition are adjustable. Sends triggers to EEG device via 'matalb_parallel_com' script.
 
-<img src="https://user-images.githubusercontent.com/105320115/177829291-967dfb34-24f9-41fb-aa0b-b5f989785160.png" width="600">
+<img src="https://user-images.githubusercontent.com/105320115/177829291-967dfb34-24f9-41fb-aa0b-b5f989785160.png" width="300">
+<img src="https://user-images.githubusercontent.com/105320115/177829556-f9616f91-588d-451e-82d1-9a350450f82e.png" width="300">
+
 
 
 ## matlab_parallel_com
