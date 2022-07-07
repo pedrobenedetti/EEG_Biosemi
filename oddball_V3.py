@@ -1,5 +1,6 @@
 #UPDATED 7/7/2022
 #ODDBALL paradigm. This protocol consist in a green ball that blinks turning into blue.
+#MATLAB-Python communication must be installed. Python 3.7 or older is needed.
 import pygame
 from pygame.locals import *
 import sys
