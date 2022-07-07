@@ -1,3 +1,4 @@
+%UPDATED 7/7/2022
 function y = send_mark_matlab(mark, port)
 MARK_DURATION=1e-3;
 pportaddr = port;
