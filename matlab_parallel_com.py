@@ -4,7 +4,7 @@ import logging
 import datetime
 import matlab.engine
 #Import MATLAB engine library. 
-#Pyhton 3.7 or older is needed.
+#Pyhton 3.7 or older is needed to communicate Python and MATLAB.
 global eng1 
 #Declares MATLAB engine as a global variable
 
