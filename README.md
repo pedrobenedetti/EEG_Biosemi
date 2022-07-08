@@ -22,6 +22,7 @@ This script works with EEG data from 128 channels. EXG1 and EXG2 are the referen
 
 ## oddball_V3.py
 Protocol in which a green ball blinks blue. P300 wave is intended to be detected. Duration of stimuli and their repetition are adjustable. Sends triggers to EEG device via 'matalb_parallel_com' script.
+Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) because Python 3.5.2 (released on Jun 2016) is installed. This is due to the laboratory computer that runs MATLAB 2016b.
 
 <img src="https://user-images.githubusercontent.com/105320115/177829291-967dfb34-24f9-41fb-aa0b-b5f989785160.png" width="300">  <img src="https://user-images.githubusercontent.com/105320115/177829556-f9616f91-588d-451e-82d1-9a350450f82e.png" width="300">
 
@@ -47,6 +48,8 @@ Description missing
 - MATLAB R2014b or later required
 - Python 3.7 or older required
   - The Pyhton enviroment must have Python 3.7 and it's path must be the first Python path in the PATH list in Enviroment Variables.
+- MATLAB and Python versions must be both of 32bit or 64bit.
+- If a MATLAB version that is not the latest one is installed an older version of Python might be needed.
 - In MATLAB command window you must run:
 
 ```
