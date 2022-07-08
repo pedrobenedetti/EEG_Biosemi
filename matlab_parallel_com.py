@@ -4,9 +4,9 @@ import logging
 import datetime
 import matlab.engine
 #Import MATLAB engine library. 
-#Pyhton 3.7 or older is needed to communicate Python and MATLAB.
+#Python 3.7 or older is needed to communicate Python and MATLAB.
 global eng1 
-#Declares MATLAB engine as a global variable
+#Declares MATLAB engine 'eng1' as a global variable
 
 #Starts MATLAB engine. This is supposed to be executed when this file is imported from the protocol script.
 eng1 = matlab.engine.start_matlab()
@@ -21,13 +21,13 @@ def send_mark_biosemi(mark, port):
         eng1.send_mark_matlab(mark, port, nargout=0)  
         #eng1.simple_script(nargout=0)          
         
-    #throws an exception in case that an error occurs.
+    #Throws an exception in case that an error occurs.
     except:
         print("Can't connect or send data to port")
         time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
         mess=(time_txt + ": Can't connect or send data to port")
         logging.error(mess)
         
-#Defines the fuction to close the engine once the protocol has ended
+#Defines the function to close the engine once the protocol has ended
 def close_eng():
     eng1.quit()
