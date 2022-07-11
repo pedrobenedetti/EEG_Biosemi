@@ -1,4 +1,4 @@
-#UPDATED 7/7/2022
+#UPDATED 11/7/2022
 #ODDBALL paradigm. This protocol consist in a green ball that blinks turning into blue.
 #MATLAB-Python communication must be installed. Python 3.7 or older is needed.
 import pygame
@@ -52,9 +52,20 @@ window.fill((255, 255, 255))
 # Fill the screen with white color
 
 X,Y=window.get_size()
-pygame.draw.circle(window, (0, 255, 0),[X//2, Y//2], 170, 0)
+dialogue_font = pygame.font.Font(None, linea)
+dialogue = dialogue_font.render("Welcome to Oddball paradigm.", True, (0,0,0))
+dialogue_rect = dialogue.get_rect(center = (X//2,Y//2-linea))
+dialogue1 = dialogue_font.render("", True, (0,0,0))
+dialogue_rect1 = dialogue1.get_rect(center = (X//2,Y//2))
+dialogue2 = dialogue_font.render("Press -> to start. Q to exit.", True, (0,0,0))
+dialogue_rect2 = dialogue2.get_rect(center = (X//2,Y//2+linea))
+#pygame.draw.circle(window, (0, 255, 0),[X//2, Y//2], 170, 0)
 # Using draw.rect module of
 # pygame to draw the solid circle
+window.blit(dialogue, dialogue_rect)
+window.blit(dialogue1, dialogue_rect1)
+window.blit(dialogue2, dialogue_rect2)
+pygame.display.update()
 
 Ncycles=5 
 #number of cycles we want
@@ -68,10 +79,31 @@ restore=0
 #Indicate if turning green is needed
 counter=0
 #we start to count the cycles.
-time0=datetime.datetime.now() 
-#Initial Time
 
+first=1
 while True:
+    while first==1:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    window.fill((255, 255, 255))
+                    pygame.display.update()
+                    pygame.draw.circle(window, (0, 255, 0),[X//2, Y//2], 170, 0)
+                    # Using draw.rect module of
+                    # pygame to draw the solid circle
+                    try:
+                        send_mark_biosemi(100, port)
+                        #100=turned into green
+                    except:
+                        print("Can't execute 'send_mark_biosemi' properly")
+                        time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                        mess=(time_txt + ": Can't execute 'send_mark_biosemi' properly")
+                        logging.error(mess)
+                    time0=datetime.datetime.now() 
+                    #Initial Time
+                    first=0
+                    break
+    
     time_now=datetime.datetime.now() 
     #Current Time
     time_passed=(time_now-time0).total_seconds() 
