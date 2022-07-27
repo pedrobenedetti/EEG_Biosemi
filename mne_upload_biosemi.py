@@ -13,7 +13,8 @@ misc =  ['EXG1','EXG2']
 eog = []  
 #Canales que son de EOG.
 
-bads = ['EXG3','EXG4', 'EXG5','EXG6','EXG7','EXG8', 'Status']
+bads = ['EXG3','EXG4', 'EXG5','EXG6','EXG7','EXG8']
+#bads = ['EXG3','EXG4', 'EXG5','EXG6','EXG7','EXG8', 'Status']
 #Bads: Canales que vi y quiero descartar porque están malos/no tienen nada. Los excluye.
 
 
