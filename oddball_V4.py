@@ -1,4 +1,4 @@
-#UPDATED 2/8/2022
+#UPDATED 5/8/2022
 #ODDBALL paradigm. This protocol consist in a ball that blinks green or red with a probability of 5/6 and 1/6 respectively.
 #matlab_parallel_com.py and send_mark_matlab.m files are needed. lib of matlab must be placed in folder. MATLAB-Python communication must be installed. Python 3.7 or older is needed.
 import pygame
@@ -72,7 +72,9 @@ pygame.display.update()
 
 N_stim = 120 
 #number of stimuli we want
-duration_stim = 0.1 
+period=1
+#Time between consecutive stimuli (seconds)
+duration_stim = 0.25 
 #Duration of stimuli (seconds)
 stim_counter = 0
 #we start to count the stimuli.
@@ -92,13 +94,13 @@ while True:
         time_passed = (time_now-time_last).total_seconds() 
         #Time passed since last stimulus has been presented
         if ball == 1:
-            if time_passed >= 0.1:
-                #If an stimulus is being showed and more than 0.1 seconds have passed since it's appearance, screen will be cleaned.
+            if time_passed >= duration_stim:
+                #If an stimulus is being showed and more than 'duration_stim' seconds have passed since it's appearance, screen will be cleaned.
                 ball = 0
                 window.fill((255, 255, 255))
                 #screen is cleaned. Stimulus is ended.
                 
-        if time_passed > 1:
+        if time_passed > period:
             stim_counter = stim_counter + 1
             number = random.randint(1,6)
             if number >= 1 and number <= 5:
@@ -159,6 +161,7 @@ while True:
         try:
         #one last mark is sent indicating that the protocol is over
             send_mark_biosemi(250, port)
+            time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
             mess=(time_txt + ": Ending protocol..."+"\n")
             logging.debug(mess)
         except:
@@ -184,6 +187,7 @@ while True:
                 try:
                 #one last mark is sent indicating that the protocol is over
                     send_mark_biosemi(250, port)
+                    time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
                     mess=(time_txt + ": Ending protocol..."+"\n")
                     logging.debug(mess)
                 except:
@@ -198,6 +202,7 @@ while True:
         try:
             #one last mark is sent indicating that the protocol is over
             send_mark_biosemi(250, port)
+            time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
             mess=(time_txt + ": Ending protocol..."+"\n")
         except:
             print("Can't execute 'send_mark_biosemi' properly")
