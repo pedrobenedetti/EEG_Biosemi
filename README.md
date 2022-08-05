@@ -26,6 +26,9 @@ Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) be
 
 <img src="https://user-images.githubusercontent.com/105320115/177829291-967dfb34-24f9-41fb-aa0b-b5f989785160.png" width="300">  <img src="https://user-images.githubusercontent.com/105320115/177829556-f9616f91-588d-451e-82d1-9a350450f82e.png" width="300">
 
+## oddball_V4.py
+Updated version of oddball protocol. There is a blinking ball that in 5 out of 6 times is green ("normal stimulus") and the other is red ("odd stimulus"). The total number stimuli is adjustable via 'N_stim' variable. Period of stimuli it is via 'period' and their duration can be changed via 'duration_stim' variable. Sends triggers to EEG device via 'matalb_parallel_com' script.
+Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) because Python 3.5.2 (released on Jun 2016) is installed. This is due to the laboratory computer that runs MATLAB 2016b.
 
 ## matlab_parallel_com.py
 Contains the function 'send_mark_biosemi'. When imported from another script activates a MATLAB engine. Also contains the fuction 'close_eng', which closes the MATLAB engine.
