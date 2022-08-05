@@ -1,5 +1,5 @@
 #UPDATED 5/8/2022
-#ODDBALL paradigm. This protocol consist in a ball that blinks green or red with a probability of 5/6 and 1/6 respectively.
+#ODDBALL paradigm. This protocol consist in a ball that blinks green or red with a probability of 5/6 and 1/6, respectively.
 #matlab_parallel_com.py and send_mark_matlab.m files are needed. lib of matlab must be placed in folder. MATLAB-Python communication must be installed. Python 3.7 or older is needed.
 import pygame
 from pygame.locals import *
@@ -60,7 +60,7 @@ X,Y=window.get_size()
 dialogue_font = pygame.font.Font(None, line)
 dialogue = dialogue_font.render("Bienvenido al experimento.", True, (0,0,0))
 dialogue_rect = dialogue.get_rect(center = (X//2,Y//2-line))
-dialogue1 = dialogue_font.render("", True, (0,0,0))
+dialogue1 = dialogue_font.render("Por favor prestá atención a los estímulos que aparecen.", True, (0,0,0))
 dialogue_rect1 = dialogue1.get_rect(center = (X//2,Y//2))
 dialogue2 = dialogue_font.render("Presione -> para continuar. Q para salir.", True, (0,0,0))
 dialogue_rect2 = dialogue2.get_rect(center = (X//2,Y//2+line))
