@@ -1,4 +1,4 @@
-#ACTUALIZADO 29/7
+#UPDATED 16/8
 from itertools import count
 import mne
 import matplotlib.pyplot as plt
