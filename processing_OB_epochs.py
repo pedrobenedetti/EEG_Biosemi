@@ -104,5 +104,4 @@ mne.viz.plot_compare_evokeds([evoked_freq, evoked_odd],
                              ylim = dict(eeg=[-8, 8]),
                              invert_y = False)
 
-
 plt.show()
