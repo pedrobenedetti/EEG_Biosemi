@@ -10,7 +10,7 @@ mne.set_log_level('WARNING')
 import random
 import os
 
-randomize_labels = True 
+randomize_labels = False 
 #If 'randomize_labels' is TRUE it will randomize the labels of the epochs and decorrelate form them.
 
 misc =  ['EXG1','EXG2'] 
