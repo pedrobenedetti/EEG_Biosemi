@@ -1,6 +1,5 @@
 #LAST UPDATE: 19/8
 #Script for processing data from 'oddball_V4.py'
-from pickle import TRUE
 import mne
 import matplotlib.pyplot as plt
 import numpy as np
@@ -17,7 +16,7 @@ misc =  ['EXG1','EXG2']
 eog = []  
 bads = ['EXG3','EXG4', 'EXG5','EXG6','EXG7','EXG8']
 
-filepath = 'C:/Users/pedro/Documents/Doctorado/Biosemi/celina_ob_v4.bdf'
+filepath = 'C:/Users/pedro/Documents/Doctorado/Biosemi/enio_ob_v4.bdf'
 raw = mne.io.read_raw_bdf(filepath, 
                           preload=True, verbose=True, 
                           eog=eog, misc=misc, exclude=bads)
@@ -49,12 +48,12 @@ stimuli = mne.pick_events(events, include=[75, 175])
 
 epochs = mne.Epochs(raw, 
                     stimuli, 
-                    tmin=-0.1, tmax=0.7, 
+                    tmin=-0.1, tmax=0.9, 
                     baseline=(-0.1, 0),
                     event_id=stimuli_dict, 
                     preload=True)
 #epochs.plot(events = stimuli, event_id=event_dict, event_color=dict(Frequent='mediumseagreen', Odd='red'))
-#print(epochs)
+print(epochs)
 
 if randomize_labels:
     epochs_rand = mne.Epochs(raw, 
@@ -82,26 +81,30 @@ if randomize_labels:
         print(counter, epochs_rand.events[counter][2])
         counter = counter + 1
     evoked = epochs_rand.average()
-    evoked_odd = epochs_rand['Odd'][:17].average()
-    evoked_freq = epochs_rand['Frequent'][:17].average() 
+    evoked_odd = epochs_rand['Odd'][:22].average()
+    evoked_freq = epochs_rand['Frequent'][:22].average() 
 else:
 
     evoked = epochs.average()
-    evoked_odd = epochs['Odd'][:17].average()
-    evoked_freq = epochs['Frequent'][:17].average()
+    evoked_odd = epochs['Odd'][:22].average()
+    evoked_freq = epochs['Frequent'][:22].average()
 
 del raw
-# evoked_freq.plot(picks=['A1'],spatial_colors=True)
-# evoked_odd.plot(picks=['A1'],spatial_colors=True)
-
 dirname, basename = os.path.split(filepath)
 if randomize_labels:
     basename = basename + ' Randomized'
+    
+channel_plot='A1'
+#evoked_freq.plot(spatial_colors=True, window_title='Frequent ' + basename +' '+ channel_plot)
+evoked_odd.plot(spatial_colors=True, window_title = 'Odd ' + basename + ' '+ channel_plot)
+
+
 mne.viz.plot_compare_evokeds([evoked_freq, evoked_odd], 
-                             picks = 'A1',
+                             picks = channel_plot,
                              colors = ['mediumseagreen', 'red', 'black'],
-                             title = basename + ' (Cz)',ci=True,
-                             ylim = dict(eeg=[-8, 8]),
+                             title = basename + ' ' + channel_plot,ci=True,
+                             ylim = dict(eeg=[-10, 10]),
                              invert_y = False)
+
 
 plt.show()
