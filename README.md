@@ -36,6 +36,13 @@ Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) be
 ## processing_OB_epochs.py
 Script for uploading and analyze measures taken with oddball_V4.py. Uploads the file specified in "filepath", applies a notch filter, configures the electrode montage and references and downsamples signals to 256Hz. Detects differents events and stimuli based on "Status" channel, were the triggers are recorded. Afterwards splits the signal in epochs, taking a tmin and tmax referenced with the trigger and sets a baseline. Averages the epochs of each class ("odd" o "frequent") and polts them. If "randomize labels" is true, it will radomize the signals in each class, merging odds and frequents stimuli.
 
+<img src="https://user-images.githubusercontent.com/105320115/191341514-426ee6d4-6218-4b2b-9fb8-4c2adc64a9d0.png" width="300" >
+
+<img src="https://user-images.githubusercontent.com/105320115/191341292-46531abb-f9eb-42fc-91cf-d844daaefa21.png" width="300" >
+
+<img src="https://user-images.githubusercontent.com/105320115/191341361-3c94354c-a00b-4a63-b084-c69e68de6a94.png >
+
+
 ## matlab_parallel_com.py
 Contains the function 'send_mark_biosemi'. When imported from another script activates a MATLAB engine. Also contains the fuction 'close_eng', which closes the MATLAB engine.
 
