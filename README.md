@@ -35,7 +35,8 @@ Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) be
 
 ## processing_OB_epochs.py
 Script for uploading and analyze measures taken with oddball_V4.py. Uploads the file specified in "filepath", applies a notch filter, configures the electrode montage and references and downsamples signals to 256Hz. Detects differents events and stimuli based on "Status" channel, were the triggers are recorded. Afterwards splits the signal in epochs, taking a tmin and tmax referenced with the trigger and sets a baseline. Averages the epochs of each class ("odd" o "frequent") and polts them. If "randomize labels" is true, it will radomize the signals in each class, merging odds and frequents stimuli.
-<img src="(https://user-images.githubusercontent.com/105320115/191342438-9a0229e9-e7d3-4e7a-9a3e-42346510412e.png" width="500" > <img src="(https://user-images.githubusercontent.com/105320115/191342493-9a3623c6-0724-49ac-ac55-a5b90160b15e.png" width="500" >
+
+<img src="https://user-images.githubusercontent.com/105320115/191342438-9a0229e9-e7d3-4e7a-9a3e-42346510412e.png" width="500" > <img src="https://user-images.githubusercontent.com/105320115/191342493-9a3623c6-0724-49ac-ac55-a5b90160b15e.png" width="500" >
 
 <img src="https://user-images.githubusercontent.com/105320115/191341361-3c94354c-a00b-4a63-b084-c69e68de6a94.png" width="1000">
 
