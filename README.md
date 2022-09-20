@@ -30,6 +30,9 @@ Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) be
 Updated version of oddball protocol. There is a blinking ball that in 5 out of 6 times is green ("normal stimulus") and the other is red ("odd stimulus"). The total number stimuli is adjustable via 'N_stim' variable. Period of stimuli it is via 'period' and their duration can be changed via 'duration_stim' variable. Sends triggers to EEG device via 'matalb_parallel_com' script.
 Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) because Python 3.5.2 (released on Jun 2016) is installed. This is due to the laboratory computer that runs MATLAB 2016b.
 
+## processing_OB_epochs.py
+Script for uploading and analyze measures taken with oddball_V4.py. Uploads the file specified in "filepath", applies a notch filter, configures the electrode montage and references and downsamples signals to 256Hz. Detects differents events and stimuli based on "Status" channel, were the triggers are recorded. Afterwards splits the signal in epochs, taking a tmin and tmax referenced with the trigger and sets a baseline. Averages the epochs of each class ("odd" o "frequent") and polts them. If "randomize labels" is true, it will radomize the signals in each class, merging odds and frequents stimuli.
+
 ## matlab_parallel_com.py
 Contains the function 'send_mark_biosemi'. When imported from another script activates a MATLAB engine. Also contains the fuction 'close_eng', which closes the MATLAB engine.
 
