@@ -20,13 +20,13 @@ This script works with EEG data from 128 channels. EXG1 and EXG2 are the referen
 
 ## oddball_V3.py
 Protocol in which a green ball blinks blue. P300 wave is intended to be detected. Duration of stimuli and their repetition are adjustable. Sends triggers to EEG device via 'matalb_parallel_com' script.
-Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) because Python 3.5.2 (released on Jun 2016) is installed. This is due to the laboratory computer that runs MATLAB 2016b.
+Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) because Python 3.5.2 (released on Jun 2016) is installed. This is due to the laboratory computer wich runs MATLAB 2016b.
 
 <img src="https://user-images.githubusercontent.com/105320115/177829291-967dfb34-24f9-41fb-aa0b-b5f989785160.png" width="300">  <img src="https://user-images.githubusercontent.com/105320115/177829556-f9616f91-588d-451e-82d1-9a350450f82e.png" width="300">
 
 ## oddball_V4.py
 Updated version of oddball protocol. There is a blinking ball that in 5 out of 6 times is green ("normal stimulus") and the other is red ("odd stimulus"). The total number stimuli is adjustable via 'N_stim' variable. Period of stimuli it is via 'period' and their duration can be changed via 'duration_stim' variable. Sends triggers to EEG device via 'matalb_parallel_com' script.
-Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) because Python 3.5.2 (released on Jun 2016) is installed. This is due to the laboratory computer that runs MATLAB 2016b.
+Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) because Python 3.5.2 (released on Jun 2016) is installed. This is due to the laboratory computer wich runs MATLAB 2016b.
 
 <img src="https://user-images.githubusercontent.com/105320115/191339775-56b0d11f-bb1e-4db6-9f40-137f399d918a.png" width="300"> <img src="https://user-images.githubusercontent.com/105320115/191339844-58ba0beb-b0ef-4cd9-97ff-dd7bf9501116.png" width="300">
 
