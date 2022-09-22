@@ -1,4 +1,4 @@
-#UPDATED 5/8/2022
+#UPDATED 22/9/2022
 #ODDBALL paradigm. This protocol consist in a ball that blinks green or red with a probability of 5/6 and 1/6, respectively.
 #matlab_parallel_com.py and send_mark_matlab.m files are needed. lib of matlab must be placed in folder. MATLAB-Python communication must be installed. Python 3.7 or older is needed.
 import pygame
@@ -99,6 +99,7 @@ while True:
                 ball = 0
                 window.fill((255, 255, 255))
                 #screen is cleaned. Stimulus is ended.
+                pygame.display.update()
                 
         if time_passed > period:
             stim_counter = stim_counter + 1
@@ -106,6 +107,7 @@ while True:
             if number >= 1 and number <= 5:
                 #Ball will be green. frequent Stimulus.
                 pygame.draw.circle(window, (0, 255, 0),[X//2, Y//2], 170, 0)
+                pygame.display.update()
                 ball = 1
                 frequent_counter = frequent_counter + 1
                 try:
@@ -120,6 +122,7 @@ while True:
             if number == 6:
                 #Ball will be red
                 pygame.draw.circle(window, (255, 0, 0),[X//2, Y//2], 170, 0)
+                pygame.display.update()
                 ball = 1
                 odd_counter = odd_counter + 1
                 try:
@@ -142,6 +145,7 @@ while True:
                     time_last=datetime.datetime.now() 
                     #Initial Time. Afterwards protocol has started this will indicate the last time a stimulus has been presented.
                     window.fill((255, 255, 255))
+                    pygame.display.update()
                     try:
                         send_mark_biosemi(25, port)
                         #A mark (25) is sent to the EEG indicating that the protocol has started.
