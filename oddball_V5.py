@@ -60,12 +60,12 @@ window.fill((255, 255, 255))
 line=50
 X,Y=window.get_size()
 dialogue_font = pygame.font.Font(None, line)
-dialogue = dialogue_font.render("Bienvenido al experimento.", True, (0,0,0))
+dialogue = dialogue_font.render("Por favor prestá atención a los estímulos que aparecen.", True, (0,0,0))
 dialogue_rect = dialogue.get_rect(center = (X//2,Y//2-line))
-dialogue1 = dialogue_font.render("Por favor prestá atención a los estímulos que aparecen.", True, (0,0,0))
+dialogue1 = dialogue_font.render("Presioná -> cada vez que veas una bola roja.", True, (0,0,0))
 dialogue_rect1 = dialogue1.get_rect(center = (X//2,Y//2))
-dialogue2 = dialogue_font.render("Presione -> para continuar. Q para salir.", True, (0,0,0))
-dialogue_rect2 = dialogue2.get_rect(center = (X//2,Y//2+line))
+dialogue2 = dialogue_font.render("Ahora, presioná -> para comenzar. Q para salir.", True, (0,0,0))
+dialogue_rect2 = dialogue2.get_rect(center = (X//2,Y//2+1.5*line))
 
 window.blit(dialogue, dialogue_rect)
 window.blit(dialogue1, dialogue_rect1)
@@ -123,7 +123,7 @@ while True:
                     logging.error(mess)
                     
             if number == 6:
-                #Ball will be red
+                #Ball will be red.
                 pygame.draw.circle(window, (255, 0, 0),[X//2, Y//2], 170, 0)
                 pygame.display.update()
                 ball = 1
@@ -131,7 +131,7 @@ while True:
                 print("se mostro el rojo a las", datetime.datetime.now())
                 try:
                     send_mark_biosemi(175, port)
-                    #175=turned into red. Odd stimulus.
+                    #175=turned into red. Rare stimulus.
                 except:
                     print("Can't execute 'send_mark_biosemi' properly")
                     time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
