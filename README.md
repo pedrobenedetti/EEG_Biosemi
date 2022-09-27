@@ -25,14 +25,16 @@ Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) be
 <img src="https://user-images.githubusercontent.com/105320115/177829291-967dfb34-24f9-41fb-aa0b-b5f989785160.png" width="300">  <img src="https://user-images.githubusercontent.com/105320115/177829556-f9616f91-588d-451e-82d1-9a350450f82e.png" width="300">
 
 ## oddball_V4.py
-Updated version of oddball protocol. There is a blinking ball that in 5 out of 6 times is green ("normal stimulus") and the other is red ("odd stimulus"). The total number stimuli is adjustable via 'N_stim' variable. Period of stimuli it is via 'period' and their duration can be changed via 'duration_stim' variable. Sends triggers to EEG device via 'matalb_parallel_com' script.
+Updated version of oddball protocol. There is a blinking ball that in 5 out of 6 times is green ("standard stimulus") and the other is red ("rare target stimulus"). The total number stimuli is adjustable via 'N_stim' variable. Period of stimuli it is via 'period' and their duration can be changed via 'duration_stim' variable. Sends triggers to EEG device via 'matalb_parallel_com' script.
 Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) because Python 3.5.2 (released on Jun 2016) is installed. This is due to the laboratory computer wich runs MATLAB 2016b.
 
 <img src="https://user-images.githubusercontent.com/105320115/191339775-56b0d11f-bb1e-4db6-9f40-137f399d918a.png" width="300"> <img src="https://user-images.githubusercontent.com/105320115/191339844-58ba0beb-b0ef-4cd9-97ff-dd7bf9501116.png" width="300">
 
+## oddball_V5.py
+Same as oddball_V4.py but user hast to press the right button each time he sees a red ball (target).
 
 ## processing_OB_epochs.py
-Script for uploading and analyze measures taken with oddball_V4.py. Uploads the file specified in "filepath", applies a notch filter, configures the electrode montage and references and downsamples signals to 256Hz. Detects differents events and stimuli based on "Status" channel, were the triggers are recorded. Afterwards splits the signal in epochs, taking a tmin and tmax referenced with the trigger and sets a baseline. Averages the epochs of each class ("odd" o "frequent") and polts them. If "randomize labels" is true, it will radomize the signals in each class, merging odds and frequents stimuli.
+Script for uploading and analyze measures taken with oddball_V4.py. Uploads the file specified in "filepath", applies a notch filter, configures the electrode montage and references and downsamples signals to 256Hz. Detects differents events and stimuli based on "Status" channel, were the triggers are recorded. Afterwards splits the signal in epochs, taking a tmin and tmax referenced with the trigger and sets a baseline. Averages the epochs of each class ("rare target" or "stardard") and polts them. If "randomize labels" is true, it will radomize the signals in each class, merging rares and stardards stimuli.
 
 <img src="https://user-images.githubusercontent.com/105320115/191342438-9a0229e9-e7d3-4e7a-9a3e-42346510412e.png" width="500" > <img src="https://user-images.githubusercontent.com/105320115/191342493-9a3623c6-0724-49ac-ac55-a5b90160b15e.png" width="500" >
 
