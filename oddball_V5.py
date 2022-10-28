@@ -1,7 +1,9 @@
-#UPDATED 27/9/2022
+#UPDATED 28/10/2022
 #ODDBALL paradigm. This protocol consist in a ball that blinks green or red with a probability of 5/6 and 1/6, respectively.
-# User must press a button each time he sees a red ball
-#matlab_parallel_com.py and send_mark_matlab.m files are needed. lib of matlab must be placed in folder. MATLAB-Python communication must be installed. Python 3.7 or older is needed.
+# The difference with V4 is that this protocol, instead of a fix number of total stimuli, presents a fix number of rare stimuli.
+# matlab_parallel_com.py and send_mark_matlab.m files are needed. lib of matlab must be placed in folder. 
+# MATLAB-Python communication must be installed. Python 3.7 or older is needed.
+
 import pygame
 from pygame.locals import *
 import sys
@@ -9,11 +11,11 @@ import datetime
 import logging
 import random
 
-logging.basicConfig(filename="logger_oddball.txt", level=logging.DEBUG)
-time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-mess0="\n Welcome to oddball pygame V4 protocol"
+logging.basicConfig(filename = "logger_oddball_V5.txt", level = logging.DEBUG)
+time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+mess0 = "\n Welcome to oddball pygame V5 protocol"
 logging.debug(mess0)
-mess=(time_txt + ": Initializing protocol...")
+mess = (time_txt + ": Initializing protocol...")
 logging.debug(mess)
 
 try:
@@ -22,22 +24,22 @@ try:
 except:
     #throws an exception and message if some error ocurred.
     print("Can't import 'matlab_parallel_com'")
-    time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-    mess=(time_txt + ": Can't import 'matlab_parallel_com'")
+    time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    mess = (time_txt + ": Can't import 'matlab_parallel_com'")
     logging.error(mess)
 
 #Codes for marks: 
-    # 25 start of code and start of protocol.
-    # 75 ball turned into green.
-    # 100 user press button.
-    # 175 red.
-    # 250 end of protocol.
+    # 25 start of code and start of protocol
+    # 75 ball turned into green
+    # 125 user has pressed the right key
+    # 175 red
+    # 225 end of protocol.
 
 #Codes for colors:
     #Green: (0,255,0)
     #red: (255,0,0)
 
-port='C020'
+port = 'C020'
 #Defines parallel port name
 
 pygame.init()
@@ -47,8 +49,8 @@ try:
     #A mark (25) is sent to the EEG indicating that the code has started.
 except:
     print("Can't execute 'send_mark_biosemi' properly")
-    time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-    mess=(time_txt + ": Can't execute 'send_mark_biosemi' properly")
+    time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+    mess = (time_txt + ": Can't execute 'send_mark_biosemi' properly")
     logging.error(mess)
 
 
@@ -57,37 +59,38 @@ window = pygame.display.set_mode((0, 0),pygame.FULLSCREEN)
 
 window.fill((255, 255, 255))
 # Fill the screen with white color
-line=50
-X,Y=window.get_size()
+line = 50
+X,Y = window.get_size()
 dialogue_font = pygame.font.Font(None, line)
-dialogue = dialogue_font.render("Por favor prestá atención a los estímulos que aparecen.", True, (0,0,0))
+dialogue = dialogue_font.render("Bienvenido al experimento.", True, (0,0,0))
 dialogue_rect = dialogue.get_rect(center = (X//2,Y//2-line))
-dialogue1 = dialogue_font.render("Presioná -> cada vez que veas una bola roja.", True, (0,0,0))
+dialogue1 = dialogue_font.render("Por favor prestá atención a los estímulos que aparecen.", True, (0,0,0))
 dialogue_rect1 = dialogue1.get_rect(center = (X//2,Y//2))
-dialogue2 = dialogue_font.render("Ahora, presioná -> para comenzar. Q para salir.", True, (0,0,0))
-dialogue_rect2 = dialogue2.get_rect(center = (X//2,Y//2+1.5*line))
+dialogue2 = dialogue_font.render("Presione -> para continuar. Q para salir.", True, (0,0,0))
+dialogue_rect2 = dialogue2.get_rect(center = (X//2,Y//2+line))
 
 window.blit(dialogue, dialogue_rect)
 window.blit(dialogue1, dialogue_rect1)
 window.blit(dialogue2, dialogue_rect2)
 pygame.display.update()
 
-N_stim = 120 
-#number of stimuli we want
-period=1
-#Time between consecutive stimuli (seconds)
+N_odd = 20 
+# number of odd stimuli we want. Note that this number is fixed. 
+# Protocol will continue until 'N_odd' rare stimuli are presented.
+period = 1
+# Time between consecutive stimuli (seconds)
 duration_stim = 0.25 
-#Duration of stimuli (seconds)
+# Duration of stimuli (seconds)
 stim_counter = 0
-#we start to count the stimuli.
+# we start to count the stimuli.
 frequent_counter = 0
-#we will count how many green balls are showed
+# we will count how many green balls are showed
 odd_counter = 0
-#we will count how many red balls are showed
+# we will count how many red balls are showed
 started = False
-#Variable that indicates that the user has not yet started the protocol (pressed ->)
-ball=0
-#Variable taht indicates that an stimulus is being presented or not
+# Variable that indicates that the user has not yet started the protocol (pressed ->)
+ball = 0
+# Variable taht indicates that an stimulus is being presented or not
 
 while True:
     if started:
@@ -112,7 +115,6 @@ while True:
                 pygame.display.update()
                 ball = 1
                 frequent_counter = frequent_counter + 1
-                
                 try:
                     send_mark_biosemi(75, port)
                     #75=turned into green
@@ -123,15 +125,14 @@ while True:
                     logging.error(mess)
                     
             if number == 6:
-                #Ball will be red.
+                #Ball will be red
                 pygame.draw.circle(window, (255, 0, 0),[X//2, Y//2], 170, 0)
                 pygame.display.update()
                 ball = 1
                 odd_counter = odd_counter + 1
-                print("se mostro el rojo a las", datetime.datetime.now())
                 try:
                     send_mark_biosemi(175, port)
-                    #175=turned into red. Rare stimulus.
+                    #175=turned into red. Odd stimulus.
                 except:
                     print("Can't execute 'send_mark_biosemi' properly")
                     time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
@@ -139,6 +140,7 @@ while True:
                     logging.error(mess)
             
             time_last=datetime.datetime.now()
+            
     while not started:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -161,13 +163,12 @@ while True:
                     break
 
     
-    #checks if the protocol has to end
-    if stim_counter > N_stim:
+    if stim_counter > N_odd:
+        #checks if the protocol has to end
         print(stim_counter, " stimuli have been showed.")
         print(frequent_counter, " frequent stimuli have been showed.")
         print(odd_counter, " odd stimuli have been showed.")
         try:
-        #one last mark is sent indicating that the protocol is over
             send_mark_biosemi(250, port)
             time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
             mess=(time_txt + ": Ending protocol..."+"\n")
@@ -177,20 +178,18 @@ while True:
             time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
             mess=(time_txt + ": Can't execute 'send_mark_biosemi' properly")
             logging.error(mess)
-        #Closes MATLAB engine
         close_eng()
-        #Quits pygame
         pygame.quit()
-        #Closes the window
         sys.exit()
         
     #Updates the screen. Changes before mentioned will be only visible after this line. Note that this is executed permanently after each cycle.
     pygame.display.update()
     
-    #The user can also finish the protocol by pressing 'Q' key.
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
+            #print('apreto')
             if event.key==pygame.K_q:
+                print('termino')
                 #the user can quit the protocol by pressing Q key
                 try:
                 #one last mark is sent indicating that the protocol is over
@@ -206,15 +205,20 @@ while True:
                 close_eng()
                 pygame.quit()
                 sys.exit()
+                
             if event.key == pygame.K_RIGHT:
-                print("apreto el boton a las", datetime.datetime.now())
+                print('apreto der')
                 try:
-                    send_mark_biosemi(100, port)
-                    #User pressed right button
+                #one last mark is sent indicating that the protocol is over
+                    send_mark_biosemi(125, port)
+                    time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                    mess=(time_txt + ": Right key pressed..."+"\n")
+                    logging.debug(mess)
+                    print(mess)
                 except:
                     print("Can't execute 'send_mark_biosemi' properly")
-                    time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
-                    mess = (time_txt + ": Can't execute 'send_mark_biosemi' properly")
+                    time_txt=datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                    mess=(time_txt + ": Can't execute 'send_mark_biosemi' properly")
                     logging.error(mess)
                     
     if event.type == pygame.QUIT:
