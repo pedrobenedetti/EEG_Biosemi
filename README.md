@@ -31,7 +31,7 @@ Currently, this scripts runs with pygame version 1.9.2 (releases on Dec 2016) be
 <img src="https://user-images.githubusercontent.com/105320115/191339775-56b0d11f-bb1e-4db6-9f40-137f399d918a.png" width="300"> <img src="https://user-images.githubusercontent.com/105320115/191339844-58ba0beb-b0ef-4cd9-97ff-dd7bf9501116.png" width="300">
 
 ## oddball_V5.py
-Same as oddball_V4.py but user hast to press the right button each time he sees a red ball (target).
+Same as oddball_V4.py but user hast to press the right button each time he sees a red ball (target). It also has a fixed number (20) of rare target stimuli instead a fixed total stimuli.
 
 ## processing_OB_epochs.py
 Script for uploading and analyze measures taken with oddball_V4.py. Uploads the file specified in "filepath", applies a notch filter, configures the electrode montage and references and downsamples signals to 256Hz. Detects differents events and stimuli based on "Status" channel, were the triggers are recorded. Afterwards splits the signal in epochs, taking a tmin and tmax referenced with the trigger and sets a baseline. Averages the epochs of each class ("rare target" or "stardard") and polts them. If "randomize labels" is true, it will radomize the signals in each class, merging rares and stardards stimuli.
