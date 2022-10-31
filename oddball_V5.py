@@ -167,7 +167,7 @@ while True:
                     break
 
     
-    if stim_counter > N_odd:
+    if odd_counter > N_odd:
         # checks if the protocol has to end
         print(stim_counter, " stimuli have been showed.")
         print(frequent_counter, " frequent stimuli have been showed.")
