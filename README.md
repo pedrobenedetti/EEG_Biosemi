@@ -58,6 +58,9 @@ Script designed to test the communication between MATLAB and Python.
 ## testing_pygame_V2.py
 Description missing
 
+## AUT_and_REY.py 
+Script designed to make the AUT and REY figure task test.
+
 # Communication between MATLAB and Python
 - MATLAB R2014b or later required
 - Python 3.7 or older required
