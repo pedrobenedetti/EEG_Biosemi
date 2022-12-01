@@ -52,12 +52,6 @@ Fuction to close the engine once the protocol has ended
 ## send_mark.m
 Contains MATLAB fuction that sends marks to the ActiveTwo AD-box of the biosemi device.
 
-## matlab_calling_test.py
-Script designed to test the communication between MATLAB and Python.
-
-## testing_pygame_V2.py
-Description missing
-
 ## AUT_and_REY.py 
 Script designed to make the AUT and REY figure task test.
 
