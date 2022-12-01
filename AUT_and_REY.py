@@ -1,6 +1,16 @@
 # UPDATED 01/12/2022
 # AUT and REY protocol.
 
+####### TIMEMARKS ########
+## 20: Protocol started ##
+## 50: AUT started      ##
+## 100: AUT ended       ##
+## 150: REY started     ##
+## 200: REY ended       ##
+## 250: Protocol ended  ##
+##########################
+
+
 ####
 ##Import libraries
 ####
@@ -142,6 +152,16 @@ while True: #permanently running
                 time_start = datetime.datetime.now() 
                 soundObj.stop()
                 started_AUT = 1
+                try:
+                    send_mark_biosemi(50, port)
+                    time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                    mess = (time_txt + ": Starting AUT"+"\n")
+                    logging.debug(mess)
+                except:
+                    print("Can't execute 'send_mark_biosemi' properly")
+                    time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                    mess = (time_txt + ": Can't execute 'send_mark_biosemi' properly")
+                    logging.error(mess)
         else:
             c=0
             pygame.draw.rect(window,(238,238,238), input_rect)
@@ -154,7 +174,6 @@ while True: #permanently running
                     window.blit(text_surface,(input_rect.x + 5, input_rect.y + c * 30+15))
                     input_rect.w = max(100,text_surface.get_width()+10)
                     input_rect.h = text_surface.get_height()*N_uses+10
-            #print(N_uses)
             text_surface2 = input_font.render((str(N_uses+1)+") "+ current_use), True, (74,64,103))
             window.blit(text_surface2,(input_rect.x + 5, input_rect.y + (N_uses+1) * 30+15))
 
@@ -219,6 +238,16 @@ while True: #permanently running
                 time_start = datetime.datetime.now() 
                 soundObj.stop()
                 started_REY = 1
+                try:
+                    send_mark_biosemi(150, port)
+                    time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                    mess = (time_txt + ": Starting REY"+"\n")
+                    logging.debug(mess)
+                except:
+                    print("Can't execute 'send_mark_biosemi' properly")
+                    time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                    mess = (time_txt + ": Can't execute 'send_mark_biosemi' properly")
+                    logging.error(mess)
 
         else:
             segs = (time_now-time_start).total_seconds()
@@ -283,6 +312,16 @@ while True: #permanently running
             elif event.key == pygame.K_RETURN: # 'Enter' Button. Advance in pages and saves uses.
                 if pag_count == 7:
                     pag_count = pag_count + 1
+                    try:
+                        send_mark_biosemi(200, port)
+                        time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                        mess = (time_txt + ": Ended Rey"+"\n")
+                        logging.debug(mess)
+                    except:
+                        print("Can't execute 'send_mark_biosemi' properly")
+                        time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                        mess = (time_txt + ": Can't execute 'send_mark_biosemi' properly")
+                        logging.error(mess)
 
                 if pag_count == 5:
                     pag_count = pag_count + 1
@@ -291,6 +330,16 @@ while True: #permanently running
 
                 if pag_count == 4:
                     pag_count = pag_count + 1
+                    try:
+                        send_mark_biosemi(100, port)
+                        time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                        mess = (time_txt + ": Ended AUT"+"\n")
+                        logging.debug(mess)
+                    except:
+                        print("Can't execute 'send_mark_biosemi' properly")
+                        time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+                        mess = (time_txt + ": Can't execute 'send_mark_biosemi' properly")
+                        logging.error(mess)
                 
                 if pag_count==3 and started_AUT == 1:
                     if len(current_use)>0:
@@ -301,8 +350,9 @@ while True: #permanently running
 
                 if pag_count == 2:
                     pag_count = pag_count + 1
-                    started_AUT = 0
+                    started_AUT = 0 #Will be 1 after 3 seconds countdown
                     time_start = datetime.datetime.now() 
+
 
                 if pag_count == 1:
                     pag_count = pag_count + 1
@@ -328,6 +378,7 @@ while True: #permanently running
                 time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
                 mess = (time_txt + ": Can't execute 'send_mark_biosemi' properly")
                 logging.error(mess)
+            logging.debug(str(output))
             logging.debug(mess)
             close_eng()
             pygame.quit()
