@@ -222,7 +222,7 @@ while True: #permanently running
         text_surface = title_font.render("INSTRUCCIONES:", True, (234, 64, 142))
         window.blit(text_surface, (X/2-text_surface.get_width()/2, 50))
 
-        text_surface2 = input_font.render("Por último, tenés que dibujar la misma figura que hace dos días.", True, (74,64,103))
+        text_surface2 = input_font.render("Por último, tenés que dibujar de memoria la misma figura que hace dos días.", True, (74,64,103))
         window.blit(text_surface2, (X/2-text_surface2.get_width()/2,Y/2))
 
         text_surface3 = input_font.render("Tenés un tiempo de 1 minuto para pensar y 3 minutos para dibujar. Presioná 'Enter' para comenzar.", True, (74,64,103))
