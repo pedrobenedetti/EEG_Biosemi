@@ -1,4 +1,4 @@
-# UPDATED 15/12/2022
+# UPDATED 21/12/2022
 # AUT and REY protocol.
 
 ## PAGE ### TITLE ########## TIME MARK ##
@@ -12,7 +12,8 @@
 ## 7        THINK REY           70 ######
 ## 8        REY                 80 ######
 ## 9        THANKS              90 ######
-## 10       SAVING/END          100 #####
+## 10       RESTING             100 #####       
+## 11       SAVING/END          110 #####
 #########################################
 
 path = "C:/Users/pbenedetti/Documents/Doctorado/Biosemi/Scripts"
@@ -127,7 +128,7 @@ while True: #permanently running
         
         window.blit(newsplane, (X/2-newsplane.get_width()/2,Y/2+100))
 
-    if pag_count == 3: #Fixation cross
+    if pag_count == 3: #Thinking AUT
         window.fill((238, 238, 238))
         time_now = datetime.datetime.now()
         text_surface = title_font.render("Pensá: ¿Qué usos alternativos le darías a un clip?", True, (234, 64, 142))
@@ -167,6 +168,7 @@ while True: #permanently running
                 text_surface = title_font.render("1", True, (234, 64, 142))
                 window.blit(text_surface, (X/2-text_surface.get_width()/2, Y/2))
                 soundObj.play()
+
             if (time_now - time_start).total_seconds() > 3:
                 time_start = datetime.datetime.now() 
                 soundObj.stop()
@@ -195,7 +197,7 @@ while True: #permanently running
             window.blit(text_surface3,(X-clip.get_width()/2-text_surface3.get_width()/2,10))
             window.blit(clip, (X-clip.get_width(),Y/2-clip.get_height()/2))
 
-            if (time_now-time_start).total_seconds()  > 4 * 60:
+            if (time_now-time_start).total_seconds()  > 4*60:
                 soundObj.play()
                 input_text.append(current_use)
                 output.append(current_use)
@@ -225,10 +227,13 @@ while True: #permanently running
         text_surface2 = input_font.render("Por último, tenés que dibujar de memoria la misma figura que hace dos días.", True, (74,64,103))
         window.blit(text_surface2, (X/2-text_surface2.get_width()/2,Y/2))
 
-        text_surface3 = input_font.render("Tenés un tiempo de 1 minuto para pensar y 3 minutos para dibujar. Presioná 'Enter' para comenzar.", True, (74,64,103))
+        text_surface3 = input_font.render("Tenés un tiempo de 1 minuto para pensar y 3 minutos para dibujar.", True, (74,64,103))
         window.blit(text_surface3, (X/2-text_surface3.get_width()/2,Y/2+50))
+
+        text_surface4 = input_font.render("Presioná 'Enter' para comenzar.", True, (74,64,103))
+        window.blit(text_surface4, (X/2-text_surface4.get_width()/2,Y/2+100))
     
-    if pag_count == 7: #Fixation Cross
+    if pag_count == 7: #Thinking REY
         window.fill((238, 238, 238))
         time_now = datetime.datetime.now()
         text_surface = title_font.render("Recordá la figura que dibujaste hace dos días.", True, (234, 64, 142))
@@ -265,6 +270,7 @@ while True: #permanently running
                 text_surface = title_font.render("1", True, (234, 64, 142))
                 window.blit(text_surface, (X/2-text_surface.get_width()/2, Y/2))
                 soundObj.play()
+
             if (time_now - time_start).total_seconds() > 3:
                 time_start = datetime.datetime.now() 
                 soundObj.stop()
@@ -288,10 +294,27 @@ while True: #permanently running
         text_surface = title_font.render("Muchas gracias por participar!", True, (234, 64, 142))
         window.blit(text_surface, (X/2-text_surface.get_width()/2, Y/2))
 
-        text_surface8 = input_font.render("Presioná 'Enter' para finalizar.", True, (74,64,103))
+        text_surface2 = title_font.render("Solo te pedimos que prestes atención durante", True, (234, 64, 142))
+        window.blit(text_surface2, (X/2-text_surface2.get_width()/2, Y/2+text_surface2.get_height()))
+
+        text_surface3 = title_font.render("un minuto a la cruz de la siguiente pantalla.", True, (234, 64, 142))
+        window.blit(text_surface3, (X/2-text_surface3.get_width()/2, Y/2+text_surface2.get_height()*2))
+
+        text_surface8 = input_font.render("Presioná 'Enter' para avanzar.", True, (74,64,103))
         window.blit(text_surface8, (X/2-text_surface8.get_width()/2,Y-100))
-    
-    if pag_count == 10: #SAVING
+
+    if pag_count == 10: #Resting
+        window.fill((238, 238, 238))
+        text_surface = title_font.render("+", True, (234, 64, 142))
+        window.blit(text_surface, (X/2-text_surface.get_width()/2, Y/2))
+        time_now = datetime.datetime.now()
+
+        if (time_now-time_start).total_seconds()  > 60:
+            pag_count = pag_count + 1
+            send_mark_biosemi(pag_count*10,port)
+
+
+    if pag_count == 11: #SAVING
         print(output)
         output = output
         filename = code + '_AUTandREY.csv'
@@ -329,6 +352,7 @@ while True: #permanently running
                 if pag_count == 9:
                     pag_count = pag_count + 1
                     send_mark_biosemi(pag_count*10,port)
+                    time_start = datetime.datetime.now() 
 
                 if pag_count == 6:
                     pag_count = pag_count + 1
