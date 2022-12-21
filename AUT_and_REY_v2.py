@@ -17,7 +17,7 @@
 #########################################
 
 path = "C:/Users/pbenedetti/Documents/Doctorado/Biosemi/Scripts"
-
+#path = "D:/PROGRAMASYCARPETASESCRITORIO/Prueba_Pedro"
 ####
 ##Import libraries
 ####
