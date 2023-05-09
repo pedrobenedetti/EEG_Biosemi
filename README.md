@@ -9,18 +9,18 @@ Python files for working with Biosemi EEG device.
 ## AUT_and_REY.py 
 Script designed to make the AUT and REY figure task test. In v3 version includes a Resting at the beginning and another at the end. It also has a minute to think before AUT and REY task. The marks send to the EEG are the following: 
 
--RESTING             02 
--PART 1 TITLE        10 
--INST. AUT           20 
--THINK AUT           30 
--AUT                 45     
--PART 2 TITLE        50 
--INST REY            60 
--THINK REY           70 
--REY                 85 
--THANKS              90 
--RESTING             100        
--SAVING/END          110 
+- RESTING             02 
+- PART 1 TITLE        10 
+- INST. AUT           20 
+- THINK AUT           30 
+- AUT                 45     
+- PART 2 TITLE        50 
+- INST REY            60 
+- THINK REY           70 
+- REY                 85 
+- THANKS              90 
+- RESTING             100        
+- SAVING/END          110 
 
 ## processing_AUTREY_v3
 Process data from AUT_and_REY.py. Computes PSD and plot it for Theta and Alpha bands.
