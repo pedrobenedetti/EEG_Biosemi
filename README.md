@@ -29,7 +29,7 @@ Process data from AUT_and_REY.py. Computes PSD and plot it for Theta and Alpha b
 Same that previous but for a Gran Average across participants.
 
 ## arrays_AUTREY_v3.py
-Generates arrays with the PSD of Theta and Alpha bands' PSD. They are separated for the diverse stages of the study.
+Generates arrays with the PSD of Theta and Alpha bands' PSD. They are separated for the diverse stages of the study and saved on an excel file.
 
 ## mne_upload_biosemi.py
 
