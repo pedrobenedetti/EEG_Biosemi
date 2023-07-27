@@ -134,19 +134,24 @@ def stats_pvalues(condition1,condition2) ->list[list]:
     
     return p_values
 
-def topomap_plot(epochs,title,p_values):
+def topomap_plot(epochs,title,p_values,binarize=True,inverse=False):
     t_min = 0
-    #p_values = pd.read_excel(r'C:/Users/pedro/Desktop/output.xlsx', sheet_name='Hoja 1')
     p_values0 = p_values
     count = 0
-
-    for x in p_values0:
-        if p_values0[count] < 0.05:
-            p_values0[count] = [1]
-        else:
-            p_values0[count] = [0]
-        count = count + 1
-    p_values0 = p_values0
+    if binarize:
+        for x in p_values0:
+            if inverse == False:
+                if p_values0[count] < 0.05:
+                    p_values0[count] = [1]
+                else:
+                    p_values0[count] = [0]
+            elif inverse == True:
+                if p_values0[count] < 0.05:
+                    p_values0[count] = [0]
+                else:
+                    p_values0[count] = [1]
+            count = count + 1
+    
     n_channels = len(epochs[0].info.ch_names )-3
     if epochs.info['nchan'] != 128 :
         epochs.drop_channels('Status')
