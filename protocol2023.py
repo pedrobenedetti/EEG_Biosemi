@@ -1,4 +1,4 @@
-#PAGINA 11, VIENOD QUE PASA CUANDO AGREGAS UN USO, GUARDAR EN USES ARRAY EL USE, AUNMENTAR N, MOSTRARLOS CON EL IN RANGE
+#UPDATED 6/11/2023
 #%% Import libraries
 import pandas as pd
 import math
@@ -26,10 +26,10 @@ logging.debug(mess)
 # will be started.
 # https://github.com/pedrobenedetti/EEG_Biosemi/blob/aec354445dbbd8bd02cfd0500223e21c7e6a9995/matlab_parallel_com.py
 try:
-    from matlab_parallel_com import *
+    from impparallel import *
 except:
     # throws an exception and message if some error ocurred.
-    print("Can't import 'matlab_parallel_com'")
+    print("Can't import 'impparallel'")
     time_txt = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
     mess = (time_txt + ": Can't import 'matlab_parallel_com'")
     logging.error(mess)
@@ -43,7 +43,7 @@ X, Y = window.get_size()
 pygame.display.update()
 
 #%%Variables initiation
-port = 'C020'
+port = 'CFE8'
 page = 1
 line_size = int(Y/20)
 title_font = pygame.font.Font(None, line_size*2)  # Title font
