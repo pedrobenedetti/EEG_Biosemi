@@ -1,4 +1,5 @@
 #UPDATED 6/11/2023
+#FALTA MANDAR SENAL CADA VEZ QUE SE PASE DE PAGINA Y RESETEAR EL time_now_epoch = datetime.datetime.now()
 #%% Import libraries
 import pandas as pd
 import math
@@ -304,7 +305,6 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                close_eng()
                 pygame.quit()
                 sys.exit()                
             elif event.key == pygame.K_DOWN:
