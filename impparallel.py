@@ -1,14 +1,10 @@
-import sys
-sys.path.append('D:/Pedro_Benedetti/lib')
-from psychopy import parallel
-import datetime
-
-
-
 adress = 0xCFE8
-
 def send_mark_biosemi(mark, adress,debug=0):
     if debug == 0:
+        import sys
+        sys.path.append('D:/Pedro_Benedetti/lib')
+        from psychopy import parallel
+        import datetime
         parallel.setPortAddress(adress)
 
         time_start = datetime.datetime.now()
@@ -23,4 +19,6 @@ def send_mark_biosemi(mark, adress,debug=0):
                 parallel.setData(0)
                 break
     elif debug == 1:
-        print('Sent a ' + mark + ' at ' + time_now)
+        import datetime
+        time_now = datetime.datetime.now()
+        print('Sent a ' + str(mark) + ' at ' + time_now.strftime("%m/%d/%Y, %H:%M:%S"))

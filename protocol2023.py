@@ -1,5 +1,4 @@
 #UPDATED 6/11/2023
-#FALTA MANDAR SENAL CADA VEZ QUE SE PASE DE PAGINA Y RESETEAR EL time_now_epoch = datetime.datetime.now()
 #%% Import libraries
 import pandas as pd
 import math
@@ -63,17 +62,18 @@ age = ""
 hand = ""
 current_data = 1
 clip = pygame.image.load(path + "/clip.png")
-
+debug = 1
 # Sound available on https://drive.google.com/file/d/1ZEsz7WcAmguzk7TIWu652IBkieHrBXdS/view?usp=share_link
 #%% Cycle
-time_start_epoch = datetime.datetime.now()
+time_start = datetime.datetime.now()
+
 while True:
     window.fill((0, 0, 0))
-    time_now_epoch = datetime.datetime.now()
-    if (time_now_epoch-time_start_epoch).total_seconds() > 30:
-        send_mark_biosemi(page*10, port)
+    time_now = datetime.datetime.now()
+    if (time_now-time_start).total_seconds() > 30:
+        send_mark_biosemi(page*10, port,debug)
         time_start_epoch = datetime.datetime.now()
-        
+#%% Page Switcher
     if page == 1: #DATOS PERSONALES
         title = title_font.render("INGRESA TUS DATOS", True, 
                                         pink)
@@ -116,12 +116,13 @@ while True:
                                             purple)
         window.blit(text4, (line_size, line_size*8))
         window.blit(text5, (text4.get_width()+line_size, line_size*8-int(0.05*line_size)))
+        
         data_text = body_font.render("Usa las flechas ARRIBA y ABAJO para desplazarte entre los campos.", True, 
                                         purple)
         window.blit(data_text, (X/2-data_text.get_width()/2, line_size*17))
         next_text = body_font.render("Presioná 'Enter' para avanzar.", True, 
                                         purple)
-        window.blit(next_text, (X/2-next_text.get_width()/2, line_size*18))
+        window.blit(next_text, (X/2-next_text.get_width()/2, line_size*18))   
     if page == 2: #INSTRUCCIONES GENERALES
         title = title_font.render("INSTRUCCIONES GENERALES", True, 
                                         pink)
@@ -164,13 +165,16 @@ while True:
                                         purple)
         window.blit(next_text, (X/2-next_text.get_width()/2, line_size*18))
     if page == 4: #RESTING
-        time_now = datetime.datetime.now()
         title = title_font.render("+", True, 
                                         pink)
         window.blit(title, (X/2-title.get_width()/2, Y/2-title.get_height()))
+        
         if (time_now-time_start).total_seconds() > 1*60:
-            page = page + 1
-            
+            page = page + 1       
+            send_mark_biosemi(page*10, port,debug)
+
+            print("Pagina " + str(page))
+            time_start = datetime.datetime.now()
     if page == 5: #INSTRUCCIONES REY
         title = title_font.render("INSTRUCCIONES TAREA 2", True, 
                                         pink)
@@ -195,16 +199,15 @@ while True:
                                         purple)
         window.blit(next_text, (X/2-next_text.get_width()/2, line_size*18))
     if page == 6: #REY PENSANDO
-        time_now = datetime.datetime.now()
         title = title_font.render("+", True, 
                                         pink)
         window.blit(title, (X/2-title.get_width()/2, Y/2-title.get_height()))   
         if (time_now-time_start).total_seconds() > 1*60:
             page = page + 1 
-            
+            send_mark_biosemi(page*10, port,debug)
+            print("Pagina " + str(page))
             time_start = datetime.datetime.now()
     if page == 7: #REY HACIENDO
-        time_now = datetime.datetime.now()
         text0 = body_font.render("Ahora sí, dibujá la figura en la hoja que tenés adelante tuyo.", True, 
                                         purple)
         window.blit(text0, (X/2-text0.get_width()/2, line_size*6))
@@ -213,6 +216,9 @@ while True:
         window.blit(text1, (X/2-text1.get_width()/2, line_size*7))
         if (time_now-time_start).total_seconds() > 3*60:
             page = page + 1
+            send_mark_biosemi(page*10, port,debug)
+            print("Pagina " + str(page))
+            time_start_epoch = datetime.datetime.now()
     if page == 8: #INSTRUCCIONES 1 AUT
         title = title_font.render("INSTRUCCIONES TAREA 3", True, 
                                         pink)
@@ -254,16 +260,15 @@ while True:
         window.blit(next_text, (X/2-next_text.get_width()/2, line_size*18))
         window.blit(clip, (X/2-clip.get_width()/2, line_size*6))     
     if page == 10: #AUT PENSANDO
-        time_now = datetime.datetime.now()
         title = title_font.render("+", True, 
                                         pink)
         window.blit(title, (X/2-title.get_width()/2, Y/2-title.get_height()))
         if (time_now-time_start).total_seconds() > 60:
             page = page + 1     
-            
+            send_mark_biosemi(page*10, port,debug)
+            print("Pagina " + str(page))
             time_start = datetime.datetime.now()
     if page == 11: #AUT HACIENDO
-        time_now = datetime.datetime.now()
         text0 = body_font.render("Ahora sí, escribí todos los usos que se te ocurran.", True, 
                                         purple)
         window.blit(text0, (line_size, line_size))
@@ -286,10 +291,13 @@ while True:
             window.blit(use_text, (number.get_width()+line_size, line_size * (i + 1)))
         if (time_now-time_start).total_seconds() > 4*60:
             page = page + 1
+            send_mark_biosemi(page*10, port,debug)
+            print("Pagina " + str(page))
             if current_use == N_uses:
                 use = ""
                 uses_array.append("")
                 print(uses_array)
+                time_start_epoch = datetime.datetime.now()                   
     if page == 12: #CHAU
         text0 = body_font.render("Listo, terminaste!", True, 
                                         purple)
@@ -302,6 +310,7 @@ while True:
         window.blit(next_text, (X/2-next_text.get_width()/2, line_size*18))
     pygame.display.update()
     
+#%% Input Handler
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -329,20 +338,14 @@ while True:
                     use = use[0:-1]
                     uses_array[current_use-1] = use
             elif event.key == pygame.K_RETURN:
-                if page == 3:
-                    time_start = datetime.datetime.now()
-                if page == 5:
-                    time_start = datetime.datetime.now()
-                if page == 9:
-                    time_start = datetime.datetime.now()
-
                 if page == 12:
-                    close_eng()
                     pygame.quit()
                     sys.exit()   
-                if page != 11 and page != 4:
+                if page != 4 and page != 6 and page != 7 and page !=10 and page != 11:
                     page = page + 1
-                    
+                    send_mark_biosemi(page*10, port,debug)
+                    print("Pagina " + str(page))
+                    time_start_epoch = datetime.datetime.now()                   
                 if page == 11:
                     print(current_use)
                     print(N_uses)
@@ -355,7 +358,7 @@ while True:
                         uses_array[current_use-1] = use
                         use =  uses_array[current_use]
                     current_use = current_use + 1
-            else: 
+            else: #Si no es RETURN, BACKSPACE, UP, DOWN o SCAPE 
                 if page==11:
                     use += event.unicode
                     uses_array[current_use-1] = use
