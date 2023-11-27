@@ -9,8 +9,9 @@ from pygame.locals import *
 import pygame
 
 #%% Set Path
-path = "C:/Users/pedro/Documents/Doctorado/protocol2023/"
+# path = "C:/Users/pedro/Documents/Doctorado/protocol2023/"
 # path = "D:/PROGRAMASYCARPETASESCRITORIO/Prueba_Pedro/protocol2023"
+path = "D:/Doctorado/Protocolo2023"
 
 #%% Initiate Logger file
 logging.basicConfig(filename="logger_protocol2023.txt", 
@@ -37,9 +38,11 @@ except:
 
 #%% Protocol initiation
 pygame.init() 
-window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+#window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+window = pygame.display.set_mode([500,500],RESIZABLE)
 window.fill((0, 0, 0))
 X, Y = window.get_size()
+print(str(X),str(Y))
 pygame.display.update()
 
 #%%Variables initiation
@@ -66,11 +69,11 @@ debug = 1
 # Sound available on https://drive.google.com/file/d/1ZEsz7WcAmguzk7TIWu652IBkieHrBXdS/view?usp=share_link
 #%% Cycle
 time_start = datetime.datetime.now()
-
+time_start_epoch = datetime.datetime.now()
 while True:
     window.fill((0, 0, 0))
     time_now = datetime.datetime.now()
-    if (time_now-time_start).total_seconds() > 30:
+    if (time_now-time_start_epoch).total_seconds() > 30:
         send_mark_biosemi(page*10, port,debug)
         time_start_epoch = datetime.datetime.now()
 #%% Page Switcher
@@ -172,9 +175,9 @@ while True:
         if (time_now-time_start).total_seconds() > 1*60:
             page = page + 1       
             send_mark_biosemi(page*10, port,debug)
-
             print("Pagina " + str(page))
             time_start = datetime.datetime.now()
+            time_start_epoch = datetime.datetime.now()
     if page == 5: #INSTRUCCIONES REY
         title = title_font.render("INSTRUCCIONES TAREA 2", True, 
                                         pink)
@@ -207,6 +210,7 @@ while True:
             send_mark_biosemi(page*10, port,debug)
             print("Pagina " + str(page))
             time_start = datetime.datetime.now()
+            time_start_epoch = datetime.datetime.now()
     if page == 7: #REY HACIENDO
         text0 = body_font.render("Ahora sí, dibujá la figura en la hoja que tenés adelante tuyo.", True, 
                                         purple)
@@ -216,8 +220,10 @@ while True:
         window.blit(text1, (X/2-text1.get_width()/2, line_size*7))
         if (time_now-time_start).total_seconds() > 3*60:
             page = page + 1
+            print((time_now-time_start).total_seconds())
             send_mark_biosemi(page*10, port,debug)
             print("Pagina " + str(page))
+            time_start = datetime.datetime.now()
             time_start_epoch = datetime.datetime.now()
     if page == 8: #INSTRUCCIONES 1 AUT
         title = title_font.render("INSTRUCCIONES TAREA 3", True, 
@@ -268,6 +274,7 @@ while True:
             send_mark_biosemi(page*10, port,debug)
             print("Pagina " + str(page))
             time_start = datetime.datetime.now()
+            time_start_epoch = datetime.datetime.now()
     if page == 11: #AUT HACIENDO
         text0 = body_font.render("Ahora sí, escribí todos los usos que se te ocurran.", True, 
                                         purple)
@@ -297,7 +304,8 @@ while True:
                 use = ""
                 uses_array.append("")
                 print(uses_array)
-                time_start_epoch = datetime.datetime.now()                   
+            time_start = datetime.datetime.now()
+            time_start_epoch = datetime.datetime.now()                   
     if page == 12: #CHAU
         text0 = body_font.render("Listo, terminaste!", True, 
                                         purple)
@@ -345,6 +353,7 @@ while True:
                     page = page + 1
                     send_mark_biosemi(page*10, port,debug)
                     print("Pagina " + str(page))
+                    time_start= datetime.datetime.now()
                     time_start_epoch = datetime.datetime.now()                   
                 if page == 11:
                     print(current_use)

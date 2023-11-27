@@ -1,9 +1,11 @@
 adress = 0xCFE8
+from psychopy import parallel
+
 def send_mark_biosemi(mark, adress,debug=0):
     if debug == 0:
         import sys
         sys.path.append('D:/Pedro_Benedetti/lib')
-        from psychopy import parallel
+        
         import datetime
         parallel.setPortAddress(adress)
 
