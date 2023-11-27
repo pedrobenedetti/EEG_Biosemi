@@ -1,6 +1,6 @@
 # EEG_Biosemi
 
-Author: Pedro Benedetti - Bioengineer Department, Buenos Aires' Technological Institute
+Author: Pedro Benedetti - PhD Candidate - Bioengineer Department, Buenos Aires' Technological Institute
 
 pbenedetti@itba.edu.ar - @peedrobenedetti
 
