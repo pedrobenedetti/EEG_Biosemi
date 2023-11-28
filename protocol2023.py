@@ -1,4 +1,4 @@
-#UPDATED 6/11/2023
+#UPDATED 28/11/2023
 #%% Import libraries
 import pandas as pd
 import math
@@ -11,7 +11,7 @@ import pygame
 #%% Set Path
 # path = "C:/Users/pedro/Documents/Doctorado/protocol2023/"
 # path = "D:/PROGRAMASYCARPETASESCRITORIO/Prueba_Pedro/protocol2023"
-path = "D:/Doctorado/Protocolo2023"
+path = "D:\Pedro_Benedetti"
 
 #%% Initiate Logger file
 logging.basicConfig(filename="logger_protocol2023.txt", 
@@ -38,15 +38,16 @@ except:
 
 #%% Protocol initiation
 pygame.init() 
-#window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-window = pygame.display.set_mode([500,500],RESIZABLE)
+window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+#window = pygame.display.set_mode([500,500],RESIZABLE)
 window.fill((0, 0, 0))
 X, Y = window.get_size()
 print(str(X),str(Y))
 pygame.display.update()
 
 #%%Variables initiation
-port = 'CFE8'
+port = 0xCFE8
+
 page = 1
 line_size = int(Y/20)
 title_font = pygame.font.Font(None, line_size*2)  # Title font
@@ -65,7 +66,7 @@ age = ""
 hand = ""
 current_data = 1
 clip = pygame.image.load(path + "/clip.png")
-debug = 1
+debug = 0
 # Sound available on https://drive.google.com/file/d/1ZEsz7WcAmguzk7TIWu652IBkieHrBXdS/view?usp=share_link
 #%% Cycle
 time_start = datetime.datetime.now()
@@ -351,7 +352,7 @@ while True:
                     sys.exit()   
                 if page != 4 and page != 6 and page != 7 and page !=10 and page != 11:
                     page = page + 1
-                    send_mark_biosemi(page*10, port,debug)
+                    send_mark_biosemi(page*10, port ,debug)
                     print("Pagina " + str(page))
                     time_start= datetime.datetime.now()
                     time_start_epoch = datetime.datetime.now()                   
