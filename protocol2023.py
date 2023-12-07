@@ -74,7 +74,7 @@ time_start_epoch = datetime.datetime.now()
 while True:
     window.fill((0, 0, 0))
     time_now = datetime.datetime.now()
-    if (time_now-time_start_epoch).total_seconds() > 30:
+    if (time_now-time_start_epoch).total_seconds() > 5:
         send_mark_biosemi(page*10, port,debug)
         time_start_epoch = datetime.datetime.now()
 #%% Page Switcher
