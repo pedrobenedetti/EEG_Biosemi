@@ -26,7 +26,7 @@ def preprocessing_mne(
 ):
     misc = ["EXG1", "EXG2"]
     eog = []
-    filepath = path + file
+    filepath = path + file + ".bdf"
     raw = mne.io.read_raw_bdf(
         filepath, preload=True, verbose=False, eog=eog, misc=misc, exclude=bads
     )
@@ -716,3 +716,81 @@ def prom_areas(epochs, condition):
     par_mean = np.mean(par_values)
 
     return fro_mean, temL_mean, temR_mean, occ_mean, par_mean
+
+
+def grand_average(
+    filepath,
+    subjects,
+    bads_preICA,
+    bads_ICA,
+    bads_postICA,
+    condition,
+    lowpass_cut=1,
+    highpass_cut=30,
+):
+    print("####### " + condition + " #######")
+    raw_plot = False
+    filtered_plot = False
+    psd_plot = False
+    edit_marks = False
+    count_subs = 0
+    evokeds = []
+    for subject in subjects:
+        print("####### " + subject + " #######")
+        file = filepath + subject
+        bad_preICA = bads_preICA[count_subs]
+        print("bad_preICA: ", bads_preICA[count_subs])
+        bad_ICA = bads_ICA[count_subs]
+        print("bad_ICA: ", bads_ICA[count_subs])
+        bad_postICA = bads_postICA[count_subs]
+        print("bad_postICA: ", bads_postICA[count_subs])
+
+        raw = preprocessing_mne(
+            filepath,
+            subject,
+            bads=bad_preICA,
+            lowpass_cut=lowpass_cut,
+            highpass_cut=highpass_cut,
+            raw_plot=raw_plot,
+            filtered_plot=filtered_plot,
+            psd_plot=psd_plot,
+            edit_marks=edit_marks,
+        )
+        print("Preprocesed " + subject + " ...")
+        ica, raw_clean = make_ICA(
+            raw,
+            method="fastica",
+            n_components=25,
+            decim=3,
+            random_state=23,
+            reject_limit=250e-6,
+            bad_ica_channels=bad_ICA,
+            plot_ica_topo=False,
+            plot_ica_time=False,
+            plot_raw=False,
+        )
+        print("ICA applied to " + subject + " ...")
+        raw.info["bads"].extend(bad_postICA)
+        events = mne.find_events(raw, stim_channel="Status")
+        my_events = mne.pick_events(events, include=[50, 140, 150, 160])
+        my_events_dict = {"Resting": 50, "ESC4": 140, "ESC5": 150, "ESC6": 160}
+        reject_criteria = dict(eeg=250e-6)
+
+        epochs_think = mne.Epochs(
+            raw,
+            my_events,
+            tmin=0,
+            tmax=5,
+            baseline=(0, 0),
+            event_id=my_events_dict,
+            preload=True,
+            reject=reject_criteria,
+        )
+        print("Epoched " + subject + " ...")
+        average_sub = epochs_think[condition].average()
+        evokeds.append(average_sub)
+        print("Ok " + subject)
+        count_subs = count_subs + 1
+
+    gAverage = mne.grand_average(evokeds)
+    return gAverage
