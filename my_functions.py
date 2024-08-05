@@ -1,5 +1,6 @@
 ## MY_FUNCTIONS.PY
-## UPDATED 31/07/2024
+## UPDATED 02/08/2024
+## pbenedetti@itba.edu.ar
 import mne
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,6 +11,7 @@ from mne.preprocessing import ICA
 
 mne.set_log_level("WARNING")
 verbose = "error"
+
 
 def preprocessing_mne(
     path: str,
@@ -23,11 +25,11 @@ def preprocessing_mne(
     psd_plot: bool,
     edit_marks: bool,
 ):
-    """Preprocessing of biosemi signals. 
-    
+    """Preprocessing of biosemi signals.
+
     Parameters
     ----------
-    path : str 
+    path : str
         path to de file.  Use \ as separator of levels.
     file : str
         name of the file. Must be .bdf and no extension in needed.
@@ -47,7 +49,7 @@ def preprocessing_mne(
         if True, filtered signal PSD will be plotted.
     edit_marks : bool
         if True, adds marks every 5 seconds in the same category epoch.
-        
+
     Returns
     ----------
         raw : instance of Raw
@@ -63,8 +65,8 @@ def preprocessing_mne(
     sfreq = raw.info["sfreq"]
     raw.notch_filter(50)
     raw.set_montage("biosemi128", on_missing="ignore")
-    raw.set_eeg_reference(ref_channels=['EXG1','EXG2'])
-    #raw.set_eeg_reference("average")
+    raw.set_eeg_reference(ref_channels=["EXG1", "EXG2"])
+    # raw.set_eeg_reference("average")
     if raw_plot:
         raw.plot(block=True, title="Carefully identify wrong channels")
         plt.show()
@@ -103,7 +105,7 @@ def preprocessing_mne(
                         separation = (
                             count_zeros // coef
                         )  # separation between two equals marks will be divided by the coef
-                        separation = 1280 #samples. 5 seconds * 256 samples/second
+                        separation = 1280  # samples. 5 seconds * 256 samples/second
                         inserted_POS = last_mark_POS
 
                         for i in range(last_mark_POS, current_POS):
@@ -179,12 +181,16 @@ def select_bads(path: str, file: str, bads: list[str], v: int):
 
 
 def topomap_values(
-    epochs: mne.Epochs, conditions: list[str], bads: list[str], my_fmin: int, my_fmax: int
+    epochs: mne.Epochs,
+    conditions: list[str],
+    bads: list[str],
+    my_fmin: int,
+    my_fmax: int,
 ):
     """
     Takes one set of epochs and one condition and returns the mean values of power spectral density (PSD) between two frequencies for each electrode.
     Electrode output is ordered from A1 to D32. If one electrode is missing because is bad, it wil be replaced with a blank space.
-    
+
     Parameters
     ----------
     epochs : mne.Epochs
@@ -192,12 +198,12 @@ def topomap_values(
     condition : list[str]
         Condition to be analyzed.
     bads : list[str]
-        List of all bads electrodes that would be excluded in the analysis. 
+        List of all bads electrodes that would be excluded in the analysis.
     my_fmin : int
         low cut frequency for the PSD.
     my_fmax : int
         low cut frequency for the PSD.
-    
+
     Returns
     ----------
     all_values : list[list[int]]
@@ -355,31 +361,33 @@ def topomap_values(
         # print('############# ' + condition + ' values #############')
         # print(values)
         all_values.append(values)
-        
+
     return all_values, channels
 
 
-def stats_pvalues(condition1:list[list], condition2:list[list]) -> tuple[list, list[str]]:
+def stats_pvalues(
+    condition1: list[list], condition2: list[list]
+) -> tuple[list, list[str]]:
     """
-    Takes two lists. Each of them of N_measures x N_channels (128). Each 
-    measure for a channel belong to a different subject but N_measures 
+    Takes two lists. Each of them of N_measures x N_channels (128). Each
+    measure for a channel belong to a different subject but N_measures
     could be variable because subjects may have rejected channels.
     The function returns te p-value of a wilcoxon test for each channel.
-    
+
     Parameters
     ----------
     condition1 : list[list]
         List of measures x channels with one condition
     condition2 : list[list]:
         List of measures x channels with the other condition
-        
+
     Returns
     ----------
     p_values : list[int]
     channels : list[str]
         list of electrode names
     """
-    
+
     from scipy.stats import wilcoxon
 
     channels = [
@@ -538,20 +546,48 @@ def stats_pvalues(condition1:list[list], condition2:list[list]) -> tuple[list, l
     return p_values, channels
 
 
-def topomap_plot(epochs, title, p_values, binarize=True, inverse=False):
+def topomap_plot(
+    epochs: mne.Epochs,
+    title: str,
+    p_values: list,
+    binarize: bool = True,
+    alpha: float = 0.05,
+    inverse: bool = False,
+):
+    """
+    Plot the p-values of the significance of the difference between electrodes of two conditions in the place were the electrodes are.
 
+    Parameters
+    ----------
+    epochs : mne.Epochs
+        Original epochs (only to use them as an example of the data structure, their information ar no really used)
+    title : str
+        Title of the plot
+    p_values : list
+        p-values of the test
+    binarize: bool | True
+        If True (default value) p-values are binarized to 0 or 1 depending on their significance.
+    alpha : int | 0.05
+        The alpha of the statistic test. If binarize == True is used as a threshold for binarizing.
+    inverse : bool | False
+        If False, 1 is significant and 0 no significant. Otherwise if it is True.
+
+    Returns
+    ----------
+    None
+    """
     t_min = 0
     p_values0 = p_values
     count = 0
     if binarize:
         for x in p_values0:
             if inverse == False:
-                if p_values0[count] < 0.05:
+                if p_values0[count] < alpha:
                     p_values0[count] = [1]
                 else:
                     p_values0[count] = [0]
             elif inverse == True:
-                if p_values0[count] < 0.05:
+                if p_values0[count] < alpha:
                     p_values0[count] = [0]
                 else:
                     p_values0[count] = [1]
@@ -595,7 +631,41 @@ def make_ICA(
     plot_raw: bool,
 ):
     """
-    Applies ICA model to the signal. If bad_ica_channels is not None, components included in list will be excluded after the model is generated.
+    Applies ICA model to the signal. If bad_ica_channels is not None, 
+    components included in list will be excluded after the model is generated.
+
+    Parameters
+    ----------
+    raw : mne.raw
+        Original data.
+    method: str 
+        To look out.
+    n_components: int
+        To look out.
+    decim: int
+        To look out.
+    random_state: int
+        To look out.
+    reject_limit
+        To look out.
+    bad_ica_channels: list[str]
+        ICA components that needs to be dropped after making ICA.
+    plot_ica_topo: bool
+        If True plots each ICA component as a topomap. Spatial distibution 
+        can be observed.
+    plot_ica_time: bool
+        If True plots each ICA component in time domain. By cliking on them 
+        they can be excluded the same way as if they were in bad_ica_channels. 
+    plot_raw: bool
+        If True plots the signal before bad_ica_channels removal and clicked 
+        components. Allows us to compare the effectivity of our removal.
+    Returns
+    ----------
+    ica
+        ICA model.
+    raw_clean : mne.raw
+        Signal cleaned without removed components.
+
     """
     raw_clean = raw.copy()
     ica = ICA(n_components=n_components, method=method, random_state=random_state).fit(
@@ -625,6 +695,9 @@ def make_ICA(
 
 
 def prom_areas(epochs, condition=None, my_fmin=None, my_fmax=None):
+    """
+    
+    """
     frontales = [
         "C8",
         "C9",
@@ -1087,49 +1160,51 @@ def df_prom_areas(subjectsxchannel):
     temR_values = []
     occ_values = []
     par_values = []
-        
-    for su in range(0,subjectsxchannel.shape[1]):
+
+    for su in range(0, subjectsxchannel.shape[1]):
         suma = 0
         for ch in frontales:
             suma = suma + subjectsxchannel[su][ch]
         prom = suma / subjectsxchannel.shape[1]
         fro_values.append(prom)
-        
+
         suma = 0
         for ch in temporales_left:
             suma = suma + subjectsxchannel[su][ch]
         prom = suma / subjectsxchannel.shape[1]
         temL_values.append(prom)
-        
+
         suma = 0
         for ch in temporales_right:
             suma = suma + subjectsxchannel[su][ch]
         prom = suma / subjectsxchannel.shape[1]
         temR_values.append(prom)
-        
+
         suma = 0
         for ch in occipital:
             suma = suma + subjectsxchannel[su][ch]
         prom = suma / subjectsxchannel.shape[1]
         occ_values.append(prom)
-        
+
         suma = 0
         for ch in parietal:
             suma = suma + subjectsxchannel[su][ch]
         prom = suma / subjectsxchannel.shape[1]
         par_values.append(prom)
-        
-        dicc = {'Frontales': fro_values,
-                'Temp Izq': temL_values,
-                'Temp Der': temR_values,
-                'Occipitales': occ_values,
-                'Parietales': par_values}
-        
+
+        dicc = {
+            "Frontales": fro_values,
+            "Temp Izq": temL_values,
+            "Temp Der": temR_values,
+            "Occipitales": occ_values,
+            "Parietales": par_values,
+        }
+
         dF_values = pd.DataFrame(dicc)
-        
+
     return dF_values
-        
-            
+
+
 def my_grand_average(
     filepath,
     subjects,
